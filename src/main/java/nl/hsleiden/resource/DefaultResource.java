@@ -1,4 +1,4 @@
-package resource;
+package nl.hsleiden.resource;
 
 import javax.inject.Singleton;
 import javax.ws.rs.GET;

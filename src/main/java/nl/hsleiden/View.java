@@ -1,3 +1,5 @@
+package nl.hsleiden;
+
 public class View {
 
     public static class Internal extends Private {}

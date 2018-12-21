@@ -1,3 +1,5 @@
+package nl.hsleiden;
+
 import com.google.inject.Module;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
@@ -9,11 +11,10 @@ import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
-import model.User;
+import nl.hsleiden.model.User;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.AuthenticationService;
 
 public class WebShopAPI_Application extends Application<WebShopApi_Configuration> {
 

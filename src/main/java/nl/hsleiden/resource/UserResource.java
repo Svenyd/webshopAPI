@@ -1,9 +1,10 @@
-package resource;
+package nl.hsleiden.resource;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.dropwizard.auth.Auth;
-import model.User;
-import service.UserService;
+import nl.hsleiden.View;
+import nl.hsleiden.model.User;
+import nl.hsleiden.service.UserService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;

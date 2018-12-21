@@ -1,6 +1,6 @@
-package service;
+package nl.hsleiden.service;
 
-import model.User;
+import nl.hsleiden.model.User;
 
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotFoundException;

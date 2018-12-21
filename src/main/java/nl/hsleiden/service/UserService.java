@@ -1,7 +1,7 @@
-package service;
+package nl.hsleiden.service;
 
-import model.User;
-import persistence.UserDAO;
+import nl.hsleiden.model.User;
+import nl.hsleiden.persistence.UserDAO;
 
 import javax.inject.Inject;
 import java.util.Collection;

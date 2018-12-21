@@ -1,11 +1,11 @@
-package service;
+package nl.hsleiden;
 
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.Authorizer;
 import io.dropwizard.auth.basic.BasicCredentials;
-import model.User;
-import persistence.UserDAO;
+import nl.hsleiden.model.User;
+import nl.hsleiden.persistence.UserDAO;
 
 import javax.inject.Inject;
 import java.util.Optional;

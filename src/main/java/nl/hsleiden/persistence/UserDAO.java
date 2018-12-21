@@ -1,6 +1,6 @@
-package persistence;
+package nl.hsleiden.persistence;
 
-import model.User;
+import nl.hsleiden.model.User;
 
 public class UserDAO {
 
