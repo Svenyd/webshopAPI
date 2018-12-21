@@ -6,8 +6,12 @@ import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebShopAPI_Application extends Application<WebShopApi_Configuration> {
+
+    private final Logger logger = LoggerFactory.getLogger(WebShopAPI_Application.class)
 
     private ConfiguredBundle assetsBundle;
     private GuiceBundle guiceBundle;
@@ -40,6 +44,8 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
     @Override
     public void run(WebShopApi_Configuration webShopApi_configuration, Environment environment) throws Exception {
         name = webShopApi_configuration.getApiName();
+
+        logger.info(String.format("Set API name to %s", name));
     }
 
     public static void main(final String[] args) throws Exception {
