@@ -4,8 +4,7 @@ import nl.hsleiden.model.User;
 
 public class UserDAO {
 
-    public User getByEmailAddress(String username) {
-        //TODO: Connect to database
-        return null;
+    public User getByEmailAddress(String email) {
+        return new User("test@test.com", "Test", "p@ssw0rd");
     }
 }

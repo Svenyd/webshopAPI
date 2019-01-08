@@ -37,8 +37,22 @@ public class User implements Principal {
     @JsonView(View.Protected.class)
     private String password;
 
+    @NotEmpty
+    @JsonView(View.Public.class)
+    private String city;
+
     @JsonView(View.Private.class)
     private String[] roles;
+
+    public User(String emailAddress, String fullName, String password) {
+        this.emailAddress = emailAddress;
+        this.fullName = fullName;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     @Override
     @JsonIgnore
@@ -80,6 +94,14 @@ public class User implements Principal {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setPassword(String password) {

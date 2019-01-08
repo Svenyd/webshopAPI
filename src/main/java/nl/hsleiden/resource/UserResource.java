@@ -26,11 +26,11 @@ public class UserResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{email}")
     @JsonView(View.Public.class)
     @RolesAllowed("GUEST")
-    public User retrieve(@PathParam("id") int id) {
-        return service.get(id);
+    public User retrieve(@PathParam("email") String email) {
+        return service.get(email);
     }
 
     @POST
@@ -41,19 +41,19 @@ public class UserResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{email}")
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Protected.class)
     @RolesAllowed("GUEST")
-    public void update(@PathParam("id") int id, @Auth User authenticator, User user) {
-        service.update(authenticator, id, user);
+    public void update(@PathParam("email") String email, @Auth User authenticator, User user) {
+        service.update(authenticator, email, user);
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{email}")
     @RolesAllowed("ADMIN")
-    public void delete(@PathParam("id") int id) {
-        service.delete(id);
+    public void delete(@PathParam("email") String email) {
+        service.delete(email);
     }
 
     @GET

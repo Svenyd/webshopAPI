@@ -20,9 +20,8 @@ public class UserService extends BaseService {
         return null;
     }
 
-    public User get(int id) {
-        //TODO: Connect to dao
-        return null;
+    public User get(String email) {
+        return dao.getByEmailAddress(email);
     }
 
     public void add(User user) {
@@ -31,8 +30,8 @@ public class UserService extends BaseService {
         //TODO: Connect to dao
     }
 
-    public void update(User authenticator, int id, User user) {
-        User oldUser = get(id);
+    public void update(User authenticator, String email, User user) {
+        User oldUser = get(email);
 
         if (!authenticator.hasRole("ADMIN")) {
             assertSelf(authenticator, user);
@@ -41,8 +40,8 @@ public class UserService extends BaseService {
         //TODO: Connect to dao
     }
 
-    public void delete(int id) {
-        User user = get(id);
+    public void delete(String email) {
+        User user = get(email);
 
         //TODO: Connect to dao
     }
