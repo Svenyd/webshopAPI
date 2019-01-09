@@ -15,7 +15,7 @@ public class User implements Principal {
     @NotEmpty
     @Length(min = 3, max = 100)
     @JsonView(View.Public.class)
-    private String fullName;
+    private String name;
 
     @NotEmpty
     @Length(min = 6, max = 7)
@@ -25,12 +25,12 @@ public class User implements Principal {
     @NotEmpty
     @Length(min = 1, max = 10)
     @JsonView(View.Public.class)
-    private String streetNumber;
+    private String house_number;
 
     @NotEmpty
     @Email
     @JsonView(View.Public.class)
-    private String emailAddress;
+    private String email;
 
     @NotEmpty
     @Length(min = 8)
@@ -41,13 +41,13 @@ public class User implements Principal {
     @JsonView(View.Public.class)
     private String city;
 
-    @JsonView(View.Private.class)
-    private String[] roles;
-
-    public User(String emailAddress, String fullName, String password) {
-        this.emailAddress = emailAddress;
-        this.fullName = fullName;
+    public User(String name, String postcode, String house_number, String email, String password, String city) {
+        this.name = name;
+        this.postcode = postcode;
+        this.house_number = house_number;
+        this.email = email;
         this.password = password;
+        this.city = city;
     }
 
     public User() {
@@ -55,17 +55,12 @@ public class User implements Principal {
     }
 
     @Override
-    @JsonIgnore
     public String getName() {
-        return null;
+        return this.name;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPostcode() {
@@ -76,20 +71,20 @@ public class User implements Principal {
         this.postcode = postcode;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getHouse_number() {
+        return house_number;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setHouse_number(String house_number) {
+        this.house_number = house_number;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -108,29 +103,29 @@ public class User implements Principal {
         this.password = password;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = roles;
-    }
-
-    public boolean hasRole(String roleName) {
-        if (roles != null) {
-            for (String role : roles) {
-                return roleName.equals(role);
-            }
-        }
-        return false;
-    }
+//    public void setRoles(String[] roles) {
+//        this.roles = roles;
+//    }
+//
+//    public boolean hasRole(String roleName) {
+//        if (roles != null) {
+//            for (String role : roles) {
+//                return roleName.equals(role);
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(emailAddress, user.emailAddress);
+        return Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(emailAddress);
+        return Objects.hash(email);
     }
 }

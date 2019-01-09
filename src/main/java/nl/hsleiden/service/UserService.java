@@ -16,35 +16,28 @@ public class UserService extends BaseService {
     }
 
     public Collection<User> getAll() {
-        //TODO: Connect to dao
-        return null;
+        return dao.getAllUsers();
     }
 
     public User get(String email) {
-        return dao.getByEmailAddress(email);
+        return dao.getUser(email);
     }
 
     public void add(User user) {
-        user.setRoles(new String[] { "GUEST" });
+//        user.setRoles(new String[] { "GUEST" });
 
-        //TODO: Connect to dao
+        dao.addUser(user);
     }
 
     public void update(User authenticator, String email, User user) {
-        User oldUser = get(email);
+//        if (!authenticator.hasRole("ADMIN")) {
+//            assertSelf(authenticator, user);
+//        }
 
-        if (!authenticator.hasRole("ADMIN")) {
-            assertSelf(authenticator, user);
-        }
-
-        //TODO: Connect to dao
+        dao.updateUser(user, email);
     }
 
     public void delete(String email) {
-        User user = get(email);
-
-        //TODO: Connect to dao
+        dao.deleteUser(email);
     }
-
-
 }

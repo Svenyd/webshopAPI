@@ -12,9 +12,14 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
 import nl.hsleiden.model.User;
+import org.glassfish.jersey.SslConfigurator;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 
 public class WebShopAPI_Application extends Application<WebShopApi_Configuration> {
 
@@ -69,9 +74,20 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
     public void run(WebShopApi_Configuration webShopApi_configuration, Environment environment) throws Exception {
         name = webShopApi_configuration.getApiName();
 
+        MariaDB.getInstance().connect("84.105.145.191", "WebShop", "Svenyd", "Kickbox123!");
+
         logger.info(String.format("Set API name to %s", name));
 
         setupAuthentication(environment);
+
+//        SslConfigurator sslConfigurator = SslConfigurator.newInstance();
+//        sslConfigurator.trustStoreFile("WebShop.keystore")
+//                .trustStorePassword("crimson");
+//        SSLContext sslContext = sslConfigurator.createSSLContext();
+//        Client client = ClientBuilder
+//                .newBuilder()
+//                .sslContext(sslContext)
+//                .build();
     }
 
     public static void main(final String[] args) throws Exception {
