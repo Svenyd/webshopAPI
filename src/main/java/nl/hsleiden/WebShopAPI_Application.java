@@ -12,6 +12,9 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
 import nl.hsleiden.model.User;
+import nl.hsleiden.persistence.IngredientDAO;
+import nl.hsleiden.persistence.ProductIngredientsDAO;
+import nl.hsleiden.service.ProductService;
 import org.glassfish.jersey.SslConfigurator;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
@@ -80,14 +83,9 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
 
         setupAuthentication(environment);
 
-//        SslConfigurator sslConfigurator = SslConfigurator.newInstance();
-//        sslConfigurator.trustStoreFile("WebShop.keystore")
-//                .trustStorePassword("crimson");
-//        SSLContext sslContext = sslConfigurator.createSSLContext();
-//        Client client = ClientBuilder
-//                .newBuilder()
-//                .sslContext(sslContext)
-//                .build();
+        //Register DAO
+        ProductIngredientsDAO productIngredientsDAO = guiceBundle.getInjector().getInstance(ProductIngredientsDAO.class);
+        IngredientDAO ingredientDAO = guiceBundle.getInjector().getInstance(IngredientDAO.class);
     }
 
     public static void main(final String[] args) throws Exception {

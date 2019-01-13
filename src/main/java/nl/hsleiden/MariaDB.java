@@ -113,6 +113,19 @@ public class MariaDB {
         return result;
     }
 
+    public ResultSet getResultInt(int parameter, String selectString) {
+        ResultSet result = null;
+        try {
+            PreparedStatement preparedStatement = instance.getConnection().prepareStatement(selectString);
+            preparedStatement.setInt(1, parameter);
+
+            result = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * Delete an object from the database.
      * @param parameter String
