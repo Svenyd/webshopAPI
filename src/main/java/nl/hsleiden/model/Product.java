@@ -3,18 +3,17 @@ package nl.hsleiden.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import nl.hsleiden.View;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
 
     @NotEmpty
-    @JsonView(View.Public.class)
-    private int id;
-
-    @NotEmpty
+    @Length(max = 100)
     @JsonView(View.Public.class)
     private String name;
 
@@ -24,29 +23,21 @@ public class Product {
 
     @NotEmpty
     @JsonView(View.Public.class)
-    private String picture;
+    private List<String> ingredients;
 
     @NotEmpty
+    @Length(max = 200)
     @JsonView(View.Public.class)
-    private Ingredient[] ingredients;
-
-    public Product(int id, String name, double price, String picture, Ingredient[] ingredients) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.picture = picture;
-        this.ingredients = ingredients;
-    }
+    private String picture;
 
     public Product() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Product(String name, double price, List<String> ingredients, String picture) {
+        this.name = name;
+        this.price = price;
+        this.ingredients = ingredients;
+        this.picture = picture;
     }
 
     public String getName() {
@@ -65,6 +56,14 @@ public class Product {
         this.price = price;
     }
 
+    public List<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public String getPicture() {
         return picture;
     }
@@ -73,42 +72,20 @@ public class Product {
         this.picture = picture;
     }
 
-    public Ingredient[] getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Ingredient[] ingredients) {
-        this.ingredients = ingredients;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
-        return id == product.id &&
-                price == product.price &&
+        return Double.compare(product.price, price) == 0 &&
                 Objects.equals(name, product.name) &&
-                Objects.equals(picture, product.picture) &&
-                Arrays.equals(ingredients, product.ingredients);
+                Objects.equals(ingredients, product.ingredients) &&
+                Objects.equals(picture, product.picture);
     }
 
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(id, name, price, picture);
-        result = 31 * result + Arrays.hashCode(ingredients);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", picture='" + picture + '\'' +
-                ", ingredients=" + Arrays.toString(ingredients) +
-                '}';
+        return Objects.hash(name, price, ingredients, picture);
     }
 }

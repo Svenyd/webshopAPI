@@ -1,19 +1,10 @@
 package nl.hsleiden.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import nl.hsleiden.View;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import java.util.Objects;
 
 public class Ingredient {
-    
-    @NotEmpty
-    @JsonView(View.Public.class)
+
     private int id;
-    
-    @NotEmpty
-    @JsonView(View.Public.class)
     private String name;
 
     public Ingredient(int id, String name) {
@@ -53,13 +44,5 @@ public class Ingredient {
     public int hashCode() {
 
         return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

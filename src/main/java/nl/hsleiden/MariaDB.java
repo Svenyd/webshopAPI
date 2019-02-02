@@ -58,6 +58,9 @@ public class MariaDB {
                 host, dbName, user, password
         );
         connect(connectionString);
+
+        //Cleanup
+        Runtime.getRuntime().addShutdownHook(new Thread(this::disconnect));
     }
 
     /**

@@ -23,16 +23,20 @@ public class UserService extends BaseService {
         return dao.getUser(email);
     }
 
-    public void add(User user) {
-//        user.setRoles(new String[] { "GUEST" });
+    public User add(User user) {
+        user.setRole("customer");
 
-        dao.addUser(user);
+        if (dao.getUser(user.getEmail()) == null) {
+            dao.addUser(user);
+            return user;
+        }
+        return null;
     }
 
     public void update(User authenticator, String email, User user) {
-//        if (!authenticator.hasRole("ADMIN")) {
-//            assertSelf(authenticator, user);
-//        }
+        if (!authenticator.hasRole("admin")) {
+            assertSelf(authenticator, user);
+        }
 
         dao.updateUser(user, email);
     }

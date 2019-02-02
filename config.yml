@@ -2,13 +2,12 @@ apiName: "WebShopAPI"
 
 assets:
   mappings:
-    /assets: /
+    /assets: /pictures
   overrides:
-    /: ../WebShopClient/
+    /pictures: pictures
 
 server:
   rootPath: /api/*
-  adminContextPath: /admin
   applicationConnectors:
    - type: http
      port: 8080
@@ -16,6 +15,4 @@ server:
      port: 8443
      keyStorePath: WebShop.keystore
      keyStorePassword: crimson
-  adminConnectors:
-   - type: http
-     port: 8081
+

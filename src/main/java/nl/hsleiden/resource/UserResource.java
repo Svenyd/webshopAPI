@@ -28,30 +28,29 @@ public class UserResource {
     @GET
     @Path("/{email}")
     @JsonView(View.Public.class)
-    @RolesAllowed("GUEST")
     public User retrieve(@PathParam("email") String email) {
         return service.get(email);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @JsonView(View.Protected.class)
-    public void create(@Valid User user) {
-        service.add(user);
+    @JsonView(View.Public.class)
+    public User create(@Valid User user) {
+        return service.add(user);
     }
 
     @PUT
     @Path("/{email}")
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Protected.class)
-    @RolesAllowed("GUEST")
+    @RolesAllowed("admin")
     public void update(@PathParam("email") String email, @Auth User authenticator, User user) {
         service.update(authenticator, email, user);
     }
 
     @DELETE
     @Path("/{email}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("admin")
     public void delete(@PathParam("email") String email) {
         service.delete(email);
     }

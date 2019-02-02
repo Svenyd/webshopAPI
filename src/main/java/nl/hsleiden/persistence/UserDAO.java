@@ -19,7 +19,7 @@ public class UserDAO {
      * @author Sven van Duijn
      */
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
 
         String selectString = "SELECT * FROM User;";
 
@@ -36,11 +36,14 @@ public class UserDAO {
             while (result.next()) {
                 User user = new User(
                         result.getString("name"),
-                        result.getString("postcode"),
-                        result.getString("house_number"),
                         result.getString("email"),
+                        result.getString("phone"),
                         result.getString("password"),
-                        result.getString("city"));
+                        result.getString("postcode"),
+                        result.getString("street"),
+                        result.getString("city"),
+                        result.getString("role")
+                );
                 users.add(user);
             }
 
@@ -59,18 +62,19 @@ public class UserDAO {
      */
     public void addUser(User user) {
         String insertString = "INSERT INTO User " +
-                "(email, name, postcode, house_number, password, city) VALUES " +
-                "(?, ?, ?, ?, ?, ?);";
+                "(name, email, phone, password, postcode, street, city, role) VALUES " +
+                "(?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement preparedStatement = database.getConnection().prepareStatement(insertString);
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getPostcode());
-            preparedStatement.setString(4, user.getHouse_number());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setString(6, user.getCity());
-
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPhone());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getPostcode());
+            preparedStatement.setString(6, user.getStreet());
+            preparedStatement.setString(7, user.getCity());
+            preparedStatement.setString(8, user.getRole());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -97,11 +101,14 @@ public class UserDAO {
             if (result.next()) {
                 user = new User(
                         result.getString("name"),
-                        result.getString("postcode"),
-                        result.getString("house_number"),
                         result.getString("email"),
+                        result.getString("phone"),
                         result.getString("password"),
-                        result.getString("city"));
+                        result.getString("postcode"),
+                        result.getString("street"),
+                        result.getString("city"),
+                        result.getString("role")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,18 +123,21 @@ public class UserDAO {
      */
     public void updateUser(User user , String email) {
         String updateString = "UPDATE User " +
-                "SET email = ?, name = ?, postcode = ?, house_number = ?, password = ?, city = ? " +
+                "SET name = ?, email = ?, phone = ?, password = ?, postcode = ?, street = ?, city = ?, role = ?" +
                 "WHERE email = ?;";
 
         try {
             PreparedStatement preparedStatement = database.getConnection().prepareStatement(updateString);
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getPostcode());
-            preparedStatement.setString(4, user.getHouse_number());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setString(6, user.getCity());
-            preparedStatement.setString(7, email);
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPhone());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getPostcode());
+            preparedStatement.setString(6, user.getStreet());
+            preparedStatement.setString(7, user.getCity());
+            preparedStatement.setString(8, user.getRole());
+            preparedStatement.setString(9, email);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,7 +151,7 @@ public class UserDAO {
      */
     public void deleteUser(String userEmail) {
         String deleteString = "DELETE FROM User " +
-                "WHERE user_email = ?;";
+                "WHERE email = ?;";
 
         database.delete(userEmail, deleteString);
     }

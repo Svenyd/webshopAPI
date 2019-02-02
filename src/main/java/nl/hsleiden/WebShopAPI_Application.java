@@ -11,18 +11,23 @@ import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
+import nl.hsleiden.model.Product;
 import nl.hsleiden.model.User;
-import nl.hsleiden.persistence.IngredientDAO;
-import nl.hsleiden.persistence.ProductIngredientsDAO;
+import nl.hsleiden.persistence.ProductDAO;
+import nl.hsleiden.persistence.UserDAO;
+import nl.hsleiden.resource.ProductResource;
+import nl.hsleiden.resource.UserResource;
 import nl.hsleiden.service.ProductService;
-import org.glassfish.jersey.SslConfigurator;
+import nl.hsleiden.service.UserService;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import java.util.EnumSet;
 
 public class WebShopAPI_Application extends Application<WebShopApi_Configuration> {
 
@@ -73,6 +78,21 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }
 
+    private void configureCors(Environment environment) {
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
+    }
+
     @Override
     public void run(WebShopApi_Configuration webShopApi_configuration, Environment environment) throws Exception {
         name = webShopApi_configuration.getApiName();
@@ -82,10 +102,22 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
         logger.info(String.format("Set API name to %s", name));
 
         setupAuthentication(environment);
+        configureCors(environment);
 
-        //Register DAO
-        ProductIngredientsDAO productIngredientsDAO = guiceBundle.getInjector().getInstance(ProductIngredientsDAO.class);
-        IngredientDAO ingredientDAO = guiceBundle.getInjector().getInstance(IngredientDAO.class);
+        environment.jersey().register(MultiPartFeature.class);
+
+        //Register Resources
+        environment.jersey().register(ProductResource.class);
+        environment.jersey().register(UserResource.class);
+
+        //Register Services
+        UserService userService = guiceBundle.getInjector().getInstance(UserService.class);
+        ProductService productService = guiceBundle.getInjector().getInstance(ProductService.class);
+
+        //Register Dao
+        ProductDAO productDAO = guiceBundle.getInjector().getInstance(ProductDAO.class);
+        UserDAO userDAO = guiceBundle.getInjector().getInstance(UserDAO.class);
+
     }
 
     public static void main(final String[] args) throws Exception {
