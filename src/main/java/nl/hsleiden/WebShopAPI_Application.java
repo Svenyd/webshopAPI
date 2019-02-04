@@ -98,7 +98,7 @@ public class WebShopAPI_Application extends Application<WebShopApi_Configuration
     public void run(WebShopApi_Configuration webShopApi_configuration, Environment environment) throws Exception {
         name = webShopApi_configuration.getApiName();
 
-        MariaDB.getInstance().connect("84.105.145.191", "WebShop", "Svenyd", "Kickbox123!");
+        MariaDB.getInstance().connect("*.*.*.*", "*******", "********", "***********");
 
         logger.info(String.format("Set API name to %s", name));
 
