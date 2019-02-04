@@ -1,6 +1,6 @@
 package nl.hsleiden.persistence;
 
-import nl.hsleiden.MariaDB;
+import nl.hsleiden.database.MariaDB;
 import nl.hsleiden.model.Product;
 
 import java.sql.PreparedStatement;
@@ -121,5 +121,22 @@ public class ProductDAO {
         String deleteString = "DELETE FROM Ingredients WHERE product_name = ?";
 
         database.delete(product_name, deleteString);
+    }
+
+    public void updateProduct(Product product, String name) {
+        String updateString = "UPDATE Product " +
+                "SET name = ?, price = ?, picture = ? " +
+                "WHERE name = ?;";
+
+        try {
+            PreparedStatement preparedStatement = database.getConnection().prepareStatement(updateString);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getPicture());
+            preparedStatement.setString(4, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

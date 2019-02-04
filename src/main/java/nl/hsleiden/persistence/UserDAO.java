@@ -1,6 +1,6 @@
 package nl.hsleiden.persistence;
 
-import nl.hsleiden.MariaDB;
+import nl.hsleiden.database.MariaDB;
 import nl.hsleiden.model.User;
 
 import java.sql.PreparedStatement;

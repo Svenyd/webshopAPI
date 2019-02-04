@@ -1,4 +1,4 @@
-package nl.hsleiden;
+package nl.hsleiden.database;
 
 import java.sql.*;
 
@@ -9,8 +9,8 @@ public class MariaDB {
 
 
     /**
-     * Returns the instance of nl.hsleiden.MariaDB so it can be accessed anywhere.
-     * @return nl.hsleiden.MariaDB
+     * Returns the instance of nl.hsleiden.database.MariaDB so it can be accessed anywhere.
+     * @return nl.hsleiden.database.MariaDB
      * @author Sven van Duijn
      */
     public static MariaDB getInstance() {
@@ -31,7 +31,7 @@ public class MariaDB {
     }
 
     /**
-     * Returns if the instance of nl.hsleiden.MariaDB has a connection with the database.
+     * Returns if the instance of nl.hsleiden.database.MariaDB has a connection with the database.
      * @return boolean
      * @author Sven van Duijn
      */

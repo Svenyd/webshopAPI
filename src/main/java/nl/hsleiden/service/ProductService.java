@@ -45,4 +45,8 @@ public class ProductService {
     public void delete(String name) {
         dao.deleteProduct(name);
     }
+
+    public void update(Product product, String name) {
+        dao.updateProduct(product, name);
+    }
 }

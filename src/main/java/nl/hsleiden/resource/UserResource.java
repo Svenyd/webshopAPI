@@ -12,10 +12,11 @@ import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collection;
+import java.util.List;
 
 @Singleton
 @Path("/users")
-@Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
     private final UserService service;
@@ -23,6 +24,12 @@ public class UserResource {
     @Inject
     public UserResource(UserService service) {
         this.service = service;
+    }
+
+    @GET
+    @RolesAllowed("admin")
+    public Collection<User> getAll(@Auth User user) {
+        return service.getAll();
     }
 
     @GET
@@ -43,7 +50,6 @@ public class UserResource {
     @Path("/{email}")
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Protected.class)
-    @RolesAllowed("admin")
     public void update(@PathParam("email") String email, @Auth User authenticator, User user) {
         service.update(authenticator, email, user);
     }
@@ -51,8 +57,13 @@ public class UserResource {
     @DELETE
     @Path("/{email}")
     @RolesAllowed("admin")
-    public void delete(@PathParam("email") String email) {
-        service.delete(email);
+    @JsonView(View.Protected.class)
+    public void delete(@Auth User user, @PathParam("email") String email) {
+        System.out.println("Wanting to delete: " + email);
+        if (!user.getEmail().equals(email)) {
+            System.out.println("Delete: " + email);
+            service.delete(email);
+        }
     }
 
     @GET

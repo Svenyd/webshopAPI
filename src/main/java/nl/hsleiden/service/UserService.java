@@ -27,6 +27,7 @@ public class UserService extends BaseService {
         user.setRole("customer");
 
         if (dao.getUser(user.getEmail()) == null) {
+            user.setPassword(PasswordHashingService.generateStrongPasswordHash(user.getPassword()));
             dao.addUser(user);
             return user;
         }
@@ -36,6 +37,7 @@ public class UserService extends BaseService {
     public void update(User authenticator, String email, User user) {
         if (!authenticator.hasRole("admin")) {
             assertSelf(authenticator, user);
+            user.setRole("customer");
         }
 
         dao.updateUser(user, email);

@@ -1,9 +1,7 @@
 package nl.hsleiden.resource;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
 import io.dropwizard.auth.Auth;
-import nl.hsleiden.View;
 import nl.hsleiden.model.Product;
 import nl.hsleiden.model.User;
 import nl.hsleiden.service.ProductService;
@@ -65,5 +63,13 @@ public class ProductResource {
     public void delete(@Auth User authenticator,
                        @PathParam("name") String name) {
         this.service.delete(name);
+    }
+
+    @PUT
+    @Path("/{name}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
+    public void update(@Auth User authenticator, Product product, @PathParam("name") String name) {
+        service.update(product, name);
     }
 }
